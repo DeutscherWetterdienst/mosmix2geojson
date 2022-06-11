@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" project-jdk-name="Python 3.6 (vismethack)" project-jdk-type="Python SDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/README.md" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="460" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/Makefile" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="74" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="213321" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/data/MOSMIX_L_2022061021.head.txt" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="228" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/parse_kml.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="70" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/test_parse_kml.py" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
+</project>
