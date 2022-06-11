@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
+
 import json
+import sys
 import xml.etree.ElementTree as ET
-from itertools import islice
 from typing import Iterator, Tuple
 from xml.etree.ElementTree import Element
 
 TEST_FILE = "data/MOSMIX_L_2022061021.kml"
-MAX_EVENTS = 10000
 MAPPING_FILE = "map_kml_geojson.json"
+MAX_STATIONS = 7
+JSON_INDENT = 2
 
 with open(MAPPING_FILE) as file:
     MAPPING = json.load(file)
@@ -64,8 +66,36 @@ def process_value(event, element):
                          for value in element.text.split()]
 
 
+number_of_processed_placemarks = 0
+features = []
+def process_placemark(event, element):
+    global number_of_processed_placemarks
+    if event == "end":
+        timeseries = []
+        for ix, time in enumerate(time_steps):
+            timeseries.append({
+                "time": time,
+                **{short_name: values[ix] for short_name, values in forecasts.items() if values[ix] is not None},
+            })
+
+        features.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [8.9, 50.7],
+            },
+            "properties": {
+                "name": "Offenbach",
+                "timeseries": timeseries,
+            },
+        })
+
+        number_of_processed_placemarks += 1
+
+
+
 def main():
-    for event, element in islice(iterparse(TEST_FILE, ["start", "end"]), MAX_EVENTS):
+    for event, element in iterparse(TEST_FILE, ["start", "end"]):
         tag_name = get_tag_without_ns(element)
         if tag_name == "TimeStep":
             process_time_step(event, element)
@@ -73,10 +103,18 @@ def main():
             process_forecast(event, element)
         elif tag_name == "value":
             process_value(event, element)
+        elif tag_name == "Placemark":
+            process_placemark(event, element)
+        if number_of_processed_placemarks >= MAX_STATIONS:
+            break
 
-    print(time_steps[:5])
-    for key, val in forecasts.items():
-        print(f"{key}={val[:5]}")
+
+
+    featureCollection = {
+        "type": "FeatureCollection",
+        "features": features,
+    }
+    json.dump(featureCollection, sys.stdout, indent=JSON_INDENT)
 
 
 if __name__ == "__main__":
