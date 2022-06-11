@@ -1,0 +1,35 @@
+{ 
+  "TTT" : {
+    "name"           : "air_temperature",
+    "iscfconvention" : true,
+    "unit"           : "K",
+    "description"    : "Temperature 2m above surface"
+  },
+  "DD" : {
+    "name"           : "wind_to_direction",
+    "iscfconvention" : true,
+    "unit"           : "degree",
+    "description"    : "Wind direction"
+  },
+  "FF" : {
+    "name"           : "wind_speed",
+    "iscfconvention" : true,
+    "unit"           : "m s-1",
+    "description"    : "Wind speed"
+  },
+  "RR1" : {
+    "name"           : "precipitation_amount",
+    "iscfconvention" : true,
+    "unit"           : "kg m-2",
+    "description"    : "Total precipitation during the last hour"
+  },
+  "ww" : {
+    "name"           : "WW",
+    "iscfconvention" : false,
+    "unit"           : null,
+    "description"    : "Significant Weather"
+  }
+}
+
+
+
