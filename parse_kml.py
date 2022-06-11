@@ -6,7 +6,7 @@ from typing import Iterator, Tuple
 from xml.etree.ElementTree import Element
 
 TEST_FILE = "data/MOSMIX_L_2022061021.kml"
-MAX_EVENTS = 1000
+MAX_EVENTS = 10000
 MAPPING_FILE = "map_kml_geojson.json"
 
 with open(MAPPING_FILE) as file:
@@ -32,7 +32,7 @@ def get_tag_without_ns(element: Element):
 def get_attrs_without_ns(element: Element):
     return {strip_ns(key): value for key, value in element.attrib.items()}
 
-
+# todo: extract from KML
 default_undef_sign = "-"
 time_steps = []
 

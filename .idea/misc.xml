@@ -7,11 +7,7 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="22" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/map_kml_geojson.json" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="420" />
+          <option name="caretOffset" value="677" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parse_kml.py" />
         </OpenedFileInfo>
       </list>
