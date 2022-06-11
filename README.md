@@ -1,4 +1,4 @@
-# vismethack
+# #vismethack: point data in skinnyWMS
 June 2022 ECMWF #vismethack DWD MOSMIX kmz to geoJSON converter
 
 This repo offers a way to convert DWD MOSMIX data to geoJSON, using the CF naming scheme. Possible uses after conversion include visualization of this global point data with [skinnyWMS](https://github.com/ecmwf/skinnywms).
