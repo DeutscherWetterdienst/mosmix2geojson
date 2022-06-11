@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import json
 import xml.etree.ElementTree as ET
 from itertools import islice
 from typing import Iterator, Tuple
@@ -7,6 +7,14 @@ from xml.etree.ElementTree import Element
 
 TEST_FILE = "data/MOSMIX_L_2022061021.kml"
 MAX_EVENTS = 1000
+MAPPING_FILE = "map_kml_geojson.json"
+
+with open(MAPPING_FILE) as file:
+    MAPPING = json.load(file)
+
+
+def map_shortname(mosmix_shortname):
+    return MAPPING.get(mosmix_shortname, {"name": mosmix_shortname})
 
 
 def iterparse(*args) -> Iterator[Tuple[str, Element]]:
@@ -44,8 +52,9 @@ def process_forecast(event, element):
     global forecasts
     # only process "end" events
     if event == "end":
-        element_name = get_attrs_without_ns(element)["elementName"]
-        forecasts[element_name] = current_value
+        mosmix_shortname = get_attrs_without_ns(element)["elementName"]
+        json_shortname = map_shortname(mosmix_shortname)["name"]
+        forecasts[json_shortname] = current_value
 
 
 def process_value(event, element):

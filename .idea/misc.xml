@@ -7,28 +7,12 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/README.md" />
+          <option name="caretOffset" value="22" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/map_kml_geojson.json" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="460" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/Makefile" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="74" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="213321" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/data/MOSMIX_L_2022061021.head.txt" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="228" />
+          <option name="caretOffset" value="420" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parse_kml.py" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="70" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test_parse_kml.py" />
         </OpenedFileInfo>
       </list>
     </option>
