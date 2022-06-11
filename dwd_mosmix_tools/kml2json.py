@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
 import json
-import sys
+import os
 import xml.etree.ElementTree as ET
-from typing import Iterator, Tuple
+from importlib_resources import open_text
+from typing import Iterator, Tuple, Union, IO, Optional
 from xml.etree.ElementTree import Element
 
-TEST_FILE = "data/MOSMIX_L_2022061021.kml"
-MAPPING_FILE = "map_kml_geojson.json"
-MAX_STATIONS = 7
-JSON_INDENT = 2
 
-with open(MAPPING_FILE) as file:
+with open_text("dwd_mosmix_tools", "parameter_shortnames.json") as file:
     MAPPING = json.load(file)
 
 
@@ -49,9 +46,10 @@ def process_time_step(event, element):
 forecasts = {}
 current_value = None
 
-
+current_station = None
 def process_forecast(event, element):
     global forecasts
+    global current_station
     # only process "end" events
     if event == "end":
         mosmix_shortname = get_attrs_without_ns(element)["elementName"]
@@ -85,7 +83,8 @@ def process_placemark(event, element):
                 "coordinates": [8.9, 50.7],
             },
             "properties": {
-                "name": "Offenbach",
+                "name": current_station_name,
+                "stationId": current_station_id,
                 "timeseries": timeseries,
             },
         })
@@ -93,29 +92,41 @@ def process_placemark(event, element):
         number_of_processed_placemarks += 1
 
 
+current_station_id = None
+def process_name(event, element):
+    global current_station_id
+    if event == "end":
+        current_station_id = element.text
 
-def main():
-    for event, element in iterparse(TEST_FILE, ["start", "end"]):
+
+current_station_name = None
+def process_description(event, element):
+    global current_station_name
+    if event == "end":
+        current_station_name = element.text
+
+
+def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Optional[int] = None):
+    for event, element in iterparse(source, ["start", "end"]):
         tag_name = get_tag_without_ns(element)
         if tag_name == "TimeStep":
             process_time_step(event, element)
+        elif tag_name == "name":
+            process_name(event, element)
+        elif tag_name == "description":
+            process_description(event, element)
         elif tag_name == "Forecast":
             process_forecast(event, element)
         elif tag_name == "value":
             process_value(event, element)
         elif tag_name == "Placemark":
             process_placemark(event, element)
-        if number_of_processed_placemarks >= MAX_STATIONS:
+        if number_of_processed_placemarks >= max_stations:
             break
-
 
 
     featureCollection = {
         "type": "FeatureCollection",
         "features": features,
     }
-    json.dump(featureCollection, sys.stdout, indent=JSON_INDENT)
-
-
-if __name__ == "__main__":
-    main()
+    return featureCollection
