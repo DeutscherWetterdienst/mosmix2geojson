@@ -3,33 +3,57 @@
     "name"           : "air_temperature",
     "iscfconvention" : true,
     "unit"           : "K",
+    "scalingfactor"  : 1,
     "description"    : "Temperature 2m above surface"
   },
   "DD" : {
     "name"           : "wind_to_direction",
     "iscfconvention" : true,
     "unit"           : "degree",
+    "scalingfactor"  : 1,
     "description"    : "Wind direction"
   },
   "FF" : {
     "name"           : "wind_speed",
     "iscfconvention" : true,
     "unit"           : "m s-1",
+    "scalingfactor"  : 1,
     "description"    : "Wind speed"
   },
   "RR1" : {
     "name"           : "precipitation_amount",
     "iscfconvention" : true,
     "unit"           : "kg m-2",
+    "scalingfactor"  : 1,
     "description"    : "Total precipitation during the last hour"
   },
   "ww" : {
     "name"           : "WW",
     "iscfconvention" : false,
     "unit"           : null,
+    "scalingfactor"  : 1,
     "description"    : "Significant Weather"
+  },
+  "wwT" : {
+    "name"           : "thunderstorm_probability",
+    "iscfconvention" : true,
+    "unit"           : 1,
+    "scalingfactor"  : 0.01,
+    "description"    : "Probability: Occurrence of thunderstorms within the last hour"
+  },
+  "N" : {
+    "name"           : "cloud_area_fraction",
+    "iscfconvention" : true,
+    "unit"           : "1",
+    "scalingfactor"  : 0.01,
+    "description"    : "Total cloud cover"
+  },
+  "PPPP" : {
+    "name"           : "surface_air_pressure_reduced",
+    "iscfconvention" : false,
+    "unit"           : "Pa",
+    "scalingfactor"  : 1,
+    "description"    : "Surface pressure, reduced"
   }
 }
-
-
 
