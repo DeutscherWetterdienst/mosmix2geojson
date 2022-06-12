@@ -3,7 +3,7 @@
 import json
 import os
 import xml.etree.ElementTree as ET
-from importlib_resources import open_text
+from importlib.resources import open_text
 from typing import Iterator, Tuple, Union, IO, Optional
 from xml.etree.ElementTree import Element
 
@@ -132,7 +132,7 @@ def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Option
             process_placemark(event, element)
 
         # for quicker dev cycles, limit loop to max_stations
-        if number_of_processed_placemarks >= max_stations:
+        if max_stations is not None and number_of_processed_placemarks >= max_stations:
             break
 
 
