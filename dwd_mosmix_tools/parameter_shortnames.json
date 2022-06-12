@@ -28,11 +28,11 @@
     "description"    : "Total precipitation during the last hour"
   },
   "ww" : {
-    "name"           : "ww",
+    "name"           : "present_weather",
     "iscfconvention" : false,
     "unit"           : null,
     "scalingfactor"  : 1,
-    "description"    : "Significant Weather"
+    "description"    : "Present weather"
   },
   "wwT" : {
     "name"           : "thunderstorm_probability",
