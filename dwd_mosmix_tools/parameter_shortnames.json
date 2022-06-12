@@ -28,7 +28,7 @@
     "description"    : "Total precipitation during the last hour"
   },
   "ww" : {
-    "name"           : "WW",
+    "name"           : "ww",
     "iscfconvention" : false,
     "unit"           : null,
     "scalingfactor"  : 1,
