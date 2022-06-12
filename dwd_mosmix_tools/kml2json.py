@@ -1,19 +1,9 @@
 #!/usr/bin/env python3
 
-import json
 import os
 import xml.etree.ElementTree as ET
-from importlib.resources import open_text
 from typing import Iterator, Tuple, Union, IO, Optional
 from xml.etree.ElementTree import Element
-
-
-with open_text("dwd_mosmix_tools", "parameter_shortnames.json") as file:
-    MAPPING = json.load(file)
-
-
-def map_shortname(mosmix_shortname):
-    return MAPPING.get(mosmix_shortname, {"name": mosmix_shortname})
 
 
 def iterparse(*args) -> Iterator[Tuple[str, Element]]:
@@ -44,17 +34,30 @@ def process_time_step(event, element):
 
 
 forecasts = {}
-current_value = None
+current_value: Optional[list] = None
 
-current_station = None
-def process_forecast(event, element):
+current_station: Optional[list] = None
+
+
+def scale_values(values, factor):
+    if factor is None or factor == 1 or factor == 1.:
+        return values
+    return [value*factor if value is not None else None for value in values]
+
+
+def process_forecast(event, element, params_metadata: Optional[dict] = None, param_list: Optional[list] = None):
     global forecasts
     global current_station
     # only process "end" events
     if event == "end":
-        mosmix_shortname = get_attrs_without_ns(element)["elementName"]
-        json_shortname = map_shortname(mosmix_shortname)["name"]
-        forecasts[json_shortname] = current_value
+        shortname = get_attrs_without_ns(element)["elementName"]
+        if params_metadata is not None:
+            param = params_metadata.get(shortname, default={"name": shortname})
+        else:
+            param = {"name": shortname}
+        if param_list is not None and param["name"] not in param_list:
+            return
+        forecasts[param["name"]] = scale_values(current_value, param.get("scalefactor"))
 
 
 def process_value(event, element):
@@ -113,8 +116,11 @@ def process_description(event, element):
         current_station_name = element.text
 
 
-def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Optional[int] = None):
-    for event, element in iterparse(source, ["start", "end"]):
+def kml2geojson(source: Union[str, bytes, os.PathLike, IO], *,
+                param_mapping: Optional[dict] = None, param_list: Optional[list] = None,
+                max_stations: Optional[int] = None):
+
+    for event, element in iterparse(source):
         tag_name = get_tag_without_ns(element)
         if tag_name == "TimeStep":
             process_time_step(event, element)
@@ -123,7 +129,7 @@ def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Option
         elif tag_name == "description":
             process_description(event, element)
         elif tag_name == "Forecast":
-            process_forecast(event, element)
+            process_forecast(event, element, param_mapping, param_list)
         elif tag_name == "value":
             process_value(event, element)
         elif tag_name == "coordinates":
@@ -135,9 +141,7 @@ def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Option
         if max_stations is not None and number_of_processed_placemarks >= max_stations:
             break
 
-
-    featureCollection = {
+    return {
         "type": "FeatureCollection",
         "features": features,
     }
-    return featureCollection

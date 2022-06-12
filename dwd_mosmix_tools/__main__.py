@@ -44,7 +44,7 @@ if __name__ == "__main__":
   # hand over list of stations to be plotted
   # hand over json file contents as dict instead of path
 
-  geojson = kml2geojson(testfile, max_stations)
+  geojson = kml2geojson(testfile, max_stations=max_stations)
 
   json.dump(geojson, sys.stdout, indent=json_indent)
 
