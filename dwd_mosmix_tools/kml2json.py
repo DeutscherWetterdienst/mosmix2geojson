@@ -63,6 +63,12 @@ def process_value(event, element):
         current_value = [float(value) if value != default_undef_sign else None
                          for value in element.text.split()]
 
+current_coordinates: Optional[list] = None
+def process_coordinates(event, element):
+    global current_coordinates
+    if event == "end":
+        # lon, lat, elevation
+        current_coordinates = [float(value) for value in element.text.split(",")]
 
 number_of_processed_placemarks = 0
 features = []
@@ -80,11 +86,12 @@ def process_placemark(event, element):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [8.9, 50.7],
+                "coordinates": current_coordinates[:2],
             },
             "properties": {
                 "name": current_station_name,
                 "stationId": current_station_id,
+                "elevation": current_coordinates[2],
                 "timeseries": timeseries,
             },
         })
@@ -119,8 +126,12 @@ def kml2geojson(source: Union[str, bytes, os.PathLike, IO], max_stations: Option
             process_forecast(event, element)
         elif tag_name == "value":
             process_value(event, element)
+        elif tag_name == "coordinates":
+            process_coordinates(event, element)
         elif tag_name == "Placemark":
             process_placemark(event, element)
+
+        # for quicker dev cycles, limit loop to max_stations
         if number_of_processed_placemarks >= max_stations:
             break
 
