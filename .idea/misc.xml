@@ -7,8 +7,20 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="409" />
+          <option name="caretOffset" value="3659" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/dwd_mosmix_tools/kml2json.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="87" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/test_dwd_mosmix_tools.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="49" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/README.md" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/dwd_mosmix_tools/__init__.py" />
         </OpenedFileInfo>
         <OpenedFileInfo>
           <option name="caretOffset" value="266" />
@@ -16,15 +28,7 @@
         </OpenedFileInfo>
         <OpenedFileInfo>
           <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/dwd_mosmix_tools/__init__.py" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/dwd_mosmix_tools/parameter_shortnames.json" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="67" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test_parse_kml.py" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/Makefile" />
         </OpenedFileInfo>
       </list>
     </option>

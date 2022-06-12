@@ -11,4 +11,4 @@ download-test-data:
 
 .PHONY: extract-test-data
 extract-test-data:
-	unzip -d data/ data/*.kmz
+	find data/ -name "*.kmz" -exec unzip -d data/ {} \;
