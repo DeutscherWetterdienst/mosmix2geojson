@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-from doctest import testfile
-import json
-from lib2to3.pgen2.token import INDENT
-import sys
 import argparse
+import json
+import sys
 
 from dwd_mosmix_tools.kml2json import kml2geojson
 
@@ -12,7 +10,7 @@ if __name__ == "__main__":
   # define parser for argparse
   # dwdkml2geojson --max-stations 7 --jsonindent 2 file.kml > file.geojson
   argparser = argparse.ArgumentParser(prog='python3 -m dwd_mosmix_tools',
-                                      description='Convert unzipped DWD MOSMIX KML file to geoJSON file, using the CF naming convention where possible')
+                                      description='Convert unzipped DWD MOSMIX KML file to geoJSON file.')
 
   # define arguments
   argparser.add_argument('File',
@@ -24,11 +22,11 @@ if __name__ == "__main__":
                          type=str,
                          help='JSON mapping file from DWD KML to geoJSON')
 
-  argparser.add_argument('--max_stations',
+  argparser.add_argument('--max-stations',
                          type=int,
                          help='number of stations to be processed')
 
-  argparser.add_argument('--json_indent',
+  argparser.add_argument('--json-indent',
                          type=int,
                          help='indentation blanks for json')
 
@@ -40,11 +38,15 @@ if __name__ == "__main__":
   mapfile    = args.mapfile
   max_stations = args.max_stations
 
-  # todo:
-  # hand over list of stations to be plotted
-  # hand over json file contents as dict instead of path
+  # todo: hand over list of stations to be plotted
 
-  geojson = kml2geojson(testfile, max_stations=max_stations)
+
+  param_mapping = None
+  if mapfile:
+      with open(mapfile) as fp:
+        param_mapping = json.load(fp)
+
+  geojson = kml2geojson(testfile, param_mapping=param_mapping, max_stations=max_stations)
 
   json.dump(geojson, sys.stdout, indent=json_indent)
 
