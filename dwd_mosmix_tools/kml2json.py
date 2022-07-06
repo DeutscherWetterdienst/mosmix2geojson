@@ -52,7 +52,7 @@ def process_forecast(event, element, params_metadata: Optional[dict] = None, par
     if event == "end":
         shortname = get_attrs_without_ns(element)["elementName"]
         if params_metadata is not None:
-            param = params_metadata.get(shortname, default={"name": shortname})
+            param = params_metadata.get(shortname, {"name": shortname})
         else:
             param = {"name": shortname}
         if param_list is not None and param["name"] not in param_list:
