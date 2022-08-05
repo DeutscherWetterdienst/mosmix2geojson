@@ -12,7 +12,7 @@ The chosen KMZ format is a zipped KML, which contains MOSMIX data in a [special 
 This software is intended to be used with [DWD's MOSMIX data](https://dwd-geoportal.de/products/G_FJM/).
 
 ## Installation
-Run `pip install git+https://github.com/DeutscherWetterdienst/mosmix2geojson.git@main#egg=mosmix2geojson` (preferably in a virtual env) to install the latest version of the Python package.
+Run `pip install git+https://github.com/DeutscherWetterdienst/mosmix2geojson.git@v1.0.0#egg=mosmix2geojson` (preferably in a virtual env) to install the latest version of the Python package.
 
 ## Step-by-step example usage
 This is an example step-by-step usage. The [latest MOSMIX_L data from opendata.dwd.de](https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/all_stations/kml/MOSMIX_L_LATEST.kmz)
