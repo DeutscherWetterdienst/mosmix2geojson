@@ -2,17 +2,21 @@
 
 This code was DWD's contribution to the #vismethack on June 2022 at ECMWF.
 
-This repo offers a way to convert DWD MOSMIX data to geoJSON. Possible uses after conversion include visualization of this global point data with [skinnyWMS](https://github.com/ecmwf/skinnywms).
+This repo offers a way to convert DWD MOSMIX data to geoJSON. Possible uses after conversion include visualization of
+this global point data with [skinnyWMS](https://github.com/ecmwf/skinnywms).
 
-MOSMIX data is generated from model output statistics. DWD MOSMIX data is published on DWD open data at https://opendata.dwd.de/weather/local_forecasts/mos/. MOSMIX_L contains a large selection of parameters; MOSMIX_S contains a smaller selection of parameters.
+MOSMIX data is generated from model output statistics. DWD MOSMIX data is published on DWD open data at
+https://opendata.dwd.de/weather/local_forecasts/mos/. MOSMIX_L contains a large selection of parameters; MOSMIX_S contains a smaller selection of parameters.
 
-The chosen KMZ format is a zipped KML, which contains MOSMIX data in a [special format](https://www.dwd.de/DE/leistungen/opendata/hilfe.html?nn=16102#doc625266bodyText5).
+The chosen KMZ format is a zipped KML, which contains MOSMIX data in a
+[special format](https://www.dwd.de/DE/leistungen/opendata/hilfe.html?nn=16102#doc625266bodyText5).
 
 
 This software is intended to be used with [DWD's MOSMIX data](https://dwd-geoportal.de/products/G_FJM/).
 
 ## Installation
-Run `pip install git+https://github.com/DeutscherWetterdienst/mosmix2geojson.git@v1.0.0#egg=mosmix2geojson` (preferably in a virtual env) to install the latest version of the Python package.
+Run `pip install git+https://github.com/DeutscherWetterdienst/mosmix2geojson.git@v1.0.0#egg=mosmix2geojson` (preferably
+in a virtual env) to install the latest version of the Python package along with it's CLI.
 
 ## Step-by-step example usage
 This is an example step-by-step usage. The [latest MOSMIX_L data from opendata.dwd.de](https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/all_stations/kml/MOSMIX_L_LATEST.kmz)
@@ -23,8 +27,8 @@ is downloaded to the working directory and converted to GeoJSON.
 * `mosmix2geojson --max-stations 2 --json-indent 2 MOSMIX_L_*.kml > mosmix-l.geojson`
 
 This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demo purposes. A file
-`example_parameter_mapping.json` is included, which renames and rescales some parameters to the CF conventions.
-You can apply the mapping by adding the option `--mapfile example_parameter_mapping.json` to the command.
+`example_parameter_mapping.json` is included, which renames and rescales some parameters to the CF conventions. You can
+apply the mapping by adding the option `--mapfile example_parameter_mapping.json` to the command.
 
 ## Advanced usage
 ```
@@ -44,3 +48,15 @@ optional arguments:
                         indentation blanks for json
   -v, --version         show program's version number and exit
 ```
+
+## Develop
+
+1. Clone this repo.
+2. Create a Python virtualenv, e.g. `python3 -m venv venv`
+3. Perform an editable installation of the package with dev extras, i.e. `pip install -e .[dev]`
+
+Now you can use the CLI interface with your latest changes. To create a new tagged version, commit your changes and then
+run `bump2version major|minor|patch` to automatically do the following:
+* calculate the new version string
+* update it in all the relevant files (as specified in `.bumpversion.cfg`)
+* commit the changed files and tag the commit with a suitable version tag
