@@ -3,8 +3,8 @@ import argparse
 import json
 import sys
 
-from dwd_mosmix_tools.kml2json import kml2geojson
-from dwd_mosmix_tools import __version__
+from mosmix2geojson.kml2json import kml2geojson
+from mosmix2geojson import __version__
 
 # define parser for argparse
 # dwdkml2geojson --max-stations 7 --jsonindent 2 file.kml > file.geojson

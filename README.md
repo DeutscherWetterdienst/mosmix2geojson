@@ -16,8 +16,7 @@ is downloaded to the working directory and converted to GeoJSON.
 
 * (run all commands from project root)
 * `wget https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/all_stations/kml/MOSMIX_L_LATEST.kmz`
-* `unzip MOSMIX_L_LATEST.kmz`
-* `python3 -m dwd_mosmix_tools --max-stations 2 --json-indent 2 MOSMIX_L_*.kml > mosmix-l.geojson`
+* `mosmix2geojson --max-stations 2 --json-indent 2 MOSMIX_L_LATEST.kmz > mosmix-l.geojson`
 
 This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demo purposes. A file
 `example_parameter_mapping.json` is included, which renames and rescales some parameters to the CF conventions.
@@ -25,12 +24,12 @@ You can apply the mapping by adding the option `--mapfile example_parameter_mapp
 
 ## Advanced usage
 ```
-usage: python3 -m dwd_mosmix_tools [-h] [--mapfile MAPFILE] [--max-stations MAX_STATIONS] [--json-indent JSON_INDENT] file
+usage: mosmix2geojson [-h] [--mapfile MAPFILE] [--max-stations MAX_STATIONS] [--json-indent JSON_INDENT] [-v] FILE
 
-Convert unzipped DWD MOSMIX KML file to geoJSON file.
+Convert DWD MOSMIX data to GeoJSON.
 
 positional arguments:
-  file                  KML file name
+  FILE                  KML file name
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -39,4 +38,5 @@ optional arguments:
                         number of stations to be processed
   --json-indent JSON_INDENT
                         indentation blanks for json
+  -v, --version         show program's version number and exit
 ```

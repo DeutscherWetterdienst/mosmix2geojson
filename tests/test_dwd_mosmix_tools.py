@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import unittest
-from dwd_mosmix_tools.kml2json import strip_ns
+from mosmix2geojson.kml2json import strip_ns
 
 
 class TestStringMethods(unittest.TestCase):
