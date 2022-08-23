@@ -43,13 +43,13 @@ mapping in the future releases.
 
 ## Advanced usage
 ```
-$ mosmix2geojson --help
-usage: mosmix2geojson [-h] [-cf | -m MAPPING_FILE] [-k] [-e-cf] [-x MAX_STATIONS] [-i JSON_INDENT] [-v] [FILE]
+usage: mosmix2geojson [-h] [-cf | -m MAPPING_FILE] [-k] [-e-cf] [-x MAX_STATIONS] [-i JSON_INDENT] [-v] [SOURCE] [TARGET]
 
 Convert DWD MOSMIX data to GeoJSON.
 
 positional arguments:
-  FILE                  KML file (default: STDIN)
+  SOURCE                source KML file, - for stdin (default: stdin)
+  TARGET                target JSON file, - for stdout (default: stdout)
 
 optional arguments:
   -h, --help            show this help message and exit

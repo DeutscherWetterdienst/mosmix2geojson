@@ -9,14 +9,22 @@ from mosmix2geojson import __version__
 
 # define parser for argparse
 # dwdkml2geojson --max-stations 7 --jsonindent 2 file.kml > file.geojson
-argparser = argparse.ArgumentParser(description='Convert DWD MOSMIX data to GeoJSON.')
+argparser = argparse.ArgumentParser(description="Convert DWD MOSMIX data to GeoJSON.")
 
 # define arguments
-argparser.add_argument('file',
-                       metavar='FILE',
-                       type=str,
+argparser.add_argument("source",
                        nargs="?",
-                       help='KML file (default: STDIN)')
+                       default=sys.stdin,
+                       type=argparse.FileType("r"),
+                       help="source KML file, - for stdin (default: stdin)",
+                       metavar="SOURCE")
+
+argparser.add_argument("target",
+                       nargs="?",
+                       default=sys.stdout,
+                       type=argparse.FileType("w"),
+                       help="target JSON file, - for stdout (default: stdout)",
+                       metavar="TARGET")
 
 mapping_group = argparser.add_argument_group("mapping arguments",
                                              description="Transform the output with mapped parameters. "
@@ -26,35 +34,35 @@ mapping_group = argparser.add_argument_group("mapping arguments",
 
 mapping_file_arg = mapping_group.add_mutually_exclusive_group()
 
-mapping_file_arg.add_argument('-cf', '--map-to-cf',
-                              action='store_const',
-                              const='cf',
-                              help='produce output with CF standard names or another human readable name where no CF standard name exists',
+mapping_file_arg.add_argument("-cf", "--map-to-cf",
+                              action="store_const",
+                              const="cf",
+                              help="produce output with CF standard names or another human readable name where no CF standard name exists",
                               dest="integrated_mapping")
 
-mapping_file_arg.add_argument('-m', '--mapping-file',
+mapping_file_arg.add_argument("-m", "--mapping-file",
                               type=str,
-                              help='apply a custom mapping to the output')
+                              help="apply a custom mapping to the output")
 
-mapping_group.add_argument('-k', '--keep-unmapped',
-                           action='store_true',
-                           help='include unmapped parameters in output')
+mapping_group.add_argument("-k", "--keep-unmapped",
+                           action="store_true",
+                           help="include unmapped parameters in output")
 
-mapping_group.add_argument('-e-cf', '--export-cf-mapping',
-                           action='store_const',
-                           const='cf',
-                           help='print the mapping configuration used by --map-to-cf and exit',
-                           dest='export_mapping')
+mapping_group.add_argument("-e-cf", "--export-cf-mapping",
+                           action="store_const",
+                           const="cf",
+                           help="print the mapping configuration used by --map-to-cf and exit",
+                           dest="export_mapping")
 
-argparser.add_argument('-x', '--max-stations',
+argparser.add_argument("-x", "--max-stations",
                        type=int,
-                       help='number of stations to be processed (default: all stations)')
+                       help="number of stations to be processed (default: all stations)")
 
-argparser.add_argument('-i', '--json-indent',
+argparser.add_argument("-i", "--json-indent",
                        type=int,
-                       help='indentation blanks for json (default: no indentation)')
+                       help="indentation blanks for json (default: no indentation)")
 
-argparser.add_argument('-v', '--version', action='version', version=__version__)
+argparser.add_argument("-v", "--version", action="version", version=__version__)
 
 
 def main():
@@ -67,9 +75,7 @@ def main():
                 print(line, end="")
         return
 
-    file = args.file
-    if file is None:
-        file = sys.stdin
+    source = args.source
     json_indent = args.json_indent
     max_stations = args.max_stations
 
@@ -83,10 +89,10 @@ def main():
         with open(mapping_file) as fp:
             param_mapping = json.load(fp)
 
-    geojson = kml2geojson(file, param_mapping=param_mapping, max_stations=max_stations,
+    geojson = kml2geojson(source, param_mapping=param_mapping, max_stations=max_stations,
                           keep_unmapped=args.keep_unmapped)
 
-    json.dump(geojson, sys.stdout, indent=json_indent)
+    json.dump(geojson, args.target, indent=json_indent)
 
 
 if __name__ == "__main__":
