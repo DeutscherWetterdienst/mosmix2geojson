@@ -7,6 +7,8 @@ from importlib import resources
 from mosmix2geojson.kml2json import kml2geojson
 from mosmix2geojson import __version__
 
+MOSMIX_KML_ENCODING = "latin-1"
+
 # define parser for argparse
 # dwdkml2geojson --max-stations 7 --jsonindent 2 file.kml > file.geojson
 argparser = argparse.ArgumentParser(description="Convert DWD MOSMIX data to GeoJSON.")
@@ -14,8 +16,8 @@ argparser = argparse.ArgumentParser(description="Convert DWD MOSMIX data to GeoJ
 # define arguments
 argparser.add_argument("source",
                        nargs="?",
-                       default=sys.stdin,
-                       type=argparse.FileType("r"),
+                       default="-",
+                       type=str,  # do not use FileType because it does not detect latin-1 for KML
                        help="source KML file, - for stdin (default: stdin)",
                        metavar="SOURCE")
 
@@ -76,6 +78,8 @@ def main():
         return
 
     source = args.source
+    if source == "-":
+        source = sys.stdin
     json_indent = args.json_indent
     max_stations = args.max_stations
 
