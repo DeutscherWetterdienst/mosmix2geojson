@@ -93,6 +93,8 @@ def main():
                           keep_unmapped=args.keep_unmapped)
 
     json.dump(geojson, args.target, indent=json_indent)
+    # add trailing newline
+    print("", file=args.target)
 
 
 if __name__ == "__main__":
