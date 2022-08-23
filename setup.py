@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mosmix2geojson",
-    version="1.0.0",
+    version="2.0.0",
     description="Convert DWD MOSMIX data to GeoJSON.",
     url="https://github.com/DeutscherWetterdienst/mosmix2geojson",
 
