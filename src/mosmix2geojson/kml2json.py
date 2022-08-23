@@ -45,14 +45,17 @@ def scale_values(values, factor):
     return [value*factor if value is not None else None for value in values]
 
 
-def process_forecast(event, element, params_metadata: Optional[dict] = None, param_list: Optional[list] = None):
+def process_forecast(event, element, params_metadata: Optional[dict] = None, param_list: Optional[list] = None, keep_unmapped=False):
     global forecasts
     global current_station
     # only process "end" events
     if event == "end":
         shortname = get_attrs_without_ns(element)["elementName"]
         if params_metadata is not None:
-            param = params_metadata.get(shortname, {"name": shortname})
+            if keep_unmapped:
+                param = params_metadata.get(shortname, {"name": shortname})
+            else:
+                param = params_metadata[shortname]
         else:
             param = {"name": shortname}
         if param_list is not None and param["name"] not in param_list:
@@ -118,7 +121,7 @@ def process_description(event, element):
 
 def kml2geojson(source: Union[str, bytes, os.PathLike, IO], *,
                 param_mapping: Optional[dict] = None, param_list: Optional[list] = None,
-                max_stations: Optional[int] = None):
+                max_stations: Optional[int] = None, keep_unmapped=False):
 
     for event, element in iterparse(source):
         tag_name = get_tag_without_ns(element)
@@ -129,7 +132,13 @@ def kml2geojson(source: Union[str, bytes, os.PathLike, IO], *,
         elif tag_name == "description":
             process_description(event, element)
         elif tag_name == "Forecast":
-            process_forecast(event, element, param_mapping, param_list)
+            try:
+                # may throw KeyErrors when keep_unmapped is False
+                process_forecast(event, element, param_mapping, param_list, keep_unmapped)
+            except KeyError:
+                # KeyErrors are thrown when a mapping is applied but no mapping exists
+                # for this Forecast and keep_unmapped is False.
+                continue
         elif tag_name == "value":
             process_value(event, element)
         elif tag_name == "coordinates":

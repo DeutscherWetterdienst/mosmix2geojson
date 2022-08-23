@@ -26,27 +26,48 @@ is downloaded to the working directory and converted to GeoJSON.
 * `unzip MOSMIX_L_LATEST.kmz`
 * `mosmix2geojson --max-stations 2 --json-indent 2 MOSMIX_L_*.kml > mosmix-l.geojson`
 
-This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demo purposes. A file
-`example_parameter_mapping.json` is included, which renames and rescales some parameters to the CF conventions. You can
-apply the mapping by adding the option `--mapfile example_parameter_mapping.json` to the command.
+This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demo purposes.
+
+## Output mapping
+
+The output uses MOSMIX parameter names by default. This can be changed by mapping the output with an integrated or a
+custom mapping file. Use the option `--map-to-cf` to map the output to CF standard names (or to a human-readable name if
+no CF standard name exists for this parameter). Alternatively, a custom mapping can be applied via
+`--mapping-file MAPPING_FILE`.
+
+When a mapping of any kind is applied, any unmapped parameters will be excluded from the output by default. Beware that
+`--map-to-cf` is currently incomplete and will therefore lack many MOSMIX parameters. Combine any mapping with
+`--keep-unmapped` to include any unmapped parameters with their original MOSMIX names in the output. Use this feature
+at your own risk as the combination of `--map-to-cf` and `--keep-unmapped` will lead to broken code when we extend this
+mapping in the future releases.
 
 ## Advanced usage
 ```
-usage: mosmix2geojson [-h] [--mapfile MAPFILE] [--max-stations MAX_STATIONS] [--json-indent JSON_INDENT] [-v] FILE
+$ mosmix2geojson --help
+usage: mosmix2geojson [-h] [-cf | -m MAPPING_FILE] [-k] [-e-cf] [-x MAX_STATIONS] [-i JSON_INDENT] [-v] [FILE]
 
 Convert DWD MOSMIX data to GeoJSON.
 
 positional arguments:
-  FILE                  KML file name
+  FILE                  KML file (default: STDIN)
 
 optional arguments:
   -h, --help            show this help message and exit
-  --mapfile MAPFILE     JSON mapping file from DWD KML to geoJSON
-  --max-stations MAX_STATIONS
-                        number of stations to be processed
-  --json-indent JSON_INDENT
-                        indentation blanks for json
+  -x MAX_STATIONS, --max-stations MAX_STATIONS
+                        number of stations to be processed (default: all stations)
+  -i JSON_INDENT, --json-indent JSON_INDENT
+                        indentation blanks for json (default: no indentation)
   -v, --version         show program's version number and exit
+
+mapping arguments:
+  Transform the output with mapped parameters. When a mapping of any kind is applied, unmapped parameters will not be included by default. Change this behaviour with the --keep-unmapped flag. Use this feature at your own risk.
+
+  -cf, --map-to-cf      produce output with CF standard names or another human readable name where no CF standard name exists
+  -m MAPPING_FILE, --mapping-file MAPPING_FILE
+                        apply a custom mapping to the output
+  -k, --keep-unmapped   include unmapped parameters in output
+  -e-cf, --export-cf-mapping
+                        print the mapping configuration used by --map-to-cf and exit
 ```
 
 ## Develop

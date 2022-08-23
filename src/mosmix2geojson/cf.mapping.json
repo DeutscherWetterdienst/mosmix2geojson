@@ -37,7 +37,7 @@
   "wwT" : {
     "name"           : "thunderstorm_probability",
     "iscfconvention" : true,
-    "unit"           : 1,
+    "unit"           : "1",
     "scalingfactor"  : 0.01,
     "description"    : "Probability: Occurrence of thunderstorms within the last hour"
   },
@@ -56,4 +56,3 @@
     "description"    : "Surface pressure, reduced"
   }
 }
-

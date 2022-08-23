@@ -8,6 +8,7 @@ setup(
 
     packages=find_packages("src"),
     package_dir={"": "src"},
+    package_data={"mosmix2geojson": ["*.json"]},
 
     python_requires=">=3.8",
     entry_points={
