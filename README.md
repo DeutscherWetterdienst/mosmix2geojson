@@ -43,7 +43,7 @@ mapping in the future releases.
 
 ## Advanced usage
 ```
-usage: mosmix2geojson [-h] [-cf | -m MAPPING_FILE] [-k] [-e-cf] [-x MAX_STATIONS] [-i JSON_INDENT] [-v] [SOURCE] [TARGET]
+usage: mosmix2geojson [-h] [--map-to-cf | -m MAPPING_FILE] [-k] [--export-cf-mapping] [-x MAX_STATIONS] [-i JSON_INDENT] [-v] [SOURCE] [TARGET]
 
 Convert DWD MOSMIX data to GeoJSON.
 
@@ -62,12 +62,11 @@ optional arguments:
 mapping arguments:
   Transform the output with mapped parameters. When a mapping of any kind is applied, unmapped parameters will not be included by default. Change this behaviour with the --keep-unmapped flag. Use this feature at your own risk.
 
-  -cf, --map-to-cf      produce output with CF standard names or another human readable name where no CF standard name exists
+  --map-to-cf           produce output with CF standard names or another human readable name where no CF standard name exists
   -m MAPPING_FILE, --mapping-file MAPPING_FILE
                         apply a custom mapping to the output
   -k, --keep-unmapped   include unmapped parameters in output
-  -e-cf, --export-cf-mapping
-                        print the mapping configuration used by --map-to-cf and exit
+  --export-cf-mapping   print the mapping configuration used by --map-to-cf and exit
 ```
 
 ## Develop

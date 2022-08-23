@@ -34,7 +34,7 @@ mapping_group = argparser.add_argument_group("mapping arguments",
 
 mapping_file_arg = mapping_group.add_mutually_exclusive_group()
 
-mapping_file_arg.add_argument("-cf", "--map-to-cf",
+mapping_file_arg.add_argument("--map-to-cf",
                               action="store_const",
                               const="cf",
                               help="produce output with CF standard names or another human readable name where no CF standard name exists",
@@ -48,7 +48,7 @@ mapping_group.add_argument("-k", "--keep-unmapped",
                            action="store_true",
                            help="include unmapped parameters in output")
 
-mapping_group.add_argument("-e-cf", "--export-cf-mapping",
+mapping_group.add_argument("--export-cf-mapping",
                            action="store_const",
                            const="cf",
                            help="print the mapping configuration used by --map-to-cf and exit",
