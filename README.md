@@ -24,9 +24,13 @@ is downloaded to the working directory and converted to GeoJSON.
 
 * `wget https://opendata.dwd.de/weather/local_forecasts/mos/MOSMIX_L/all_stations/kml/MOSMIX_L_LATEST.kmz`
 * `unzip MOSMIX_L_LATEST.kmz`
-* `mosmix2geojson --max-stations 2 --json-indent 2 MOSMIX_L_*.kml > mosmix-l.geojson`
+* `mosmix2geojson --max-stations 2 --json-indent 2 MOSMIX_L_*.kml mosmix-l.geojson`
 
-This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demo purposes.
+This will stop after a maximum of 2 MOSMIX stations, which is just to reduce processing time for demonstration purposes.
+To process all stations just remove `--max-stations 2` from this command.
+
+**Caution:** Processing a whole MOSMIX_L file will take up to 10 GiB of memory. Make sure you have enough memory
+or your computer may become unresponsive.
 
 ## Output mapping
 
